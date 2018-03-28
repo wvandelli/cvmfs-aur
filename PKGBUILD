@@ -10,7 +10,7 @@ arch=('x86_64')
 url="http://cernvm.cern.ch/portal/filesystem"
 license=('BSD')
 depends=('fuse2' 'sqlite' 'curl' 'python' 'c-ares' 'intel-tbb' 'leveldb' 'openssl-1.0' 'pacparser')
-makedepends=('cmake' 'python' 'unzip' 'gtest' 'python-geoip' 'sparsehash')
+makedepends=('cmake' 'python' 'unzip' 'gtest' 'sparsehash')
 backup=('etc/cvmfs/default.local')
 install=cvmfs.install
 options=('!emptydirs')
@@ -22,7 +22,7 @@ md5sums=('74c438d8d5067f90422fc1775d5e108c'
 prepare() {
     cd "$srcdir/$pkgname-$pkgver"
     sed -i 's/missing_libs=\"libcurl /missing_libs=\"/g' bootstrap.sh
-    sed -i 's/missing_libs=\".*/missing_libs=\"vjson sha2 sha3 mongoose\"/g' bootstrap.sh
+    sed -i 's/missing_libs=\".*/missing_libs=\"vjson sha2 sha3\"/g' bootstrap.sh
 }
 
 build() {
