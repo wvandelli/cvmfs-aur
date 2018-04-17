@@ -16,10 +16,12 @@ install=cvmfs.install
 options=('!emptydirs')
 source=("https://ecsft.cern.ch/dist/$pkgname/$pkgname-$pkgver/$pkgname-$pkgver.tar.gz"
         'settings.cmake'
-	'externals.patch')
+	'externals.patch'
+	'sqlite-scratch.patch')
 md5sums=('74c438d8d5067f90422fc1775d5e108c'
          '20dc60c61077f4a3711463e8686d260d'
-         'ce48523a1319f54349a897a6c32d7e34')
+         'ce48523a1319f54349a897a6c32d7e34'
+         '0ef4c858aa9648dcd46768991748eb06')
 
 prepare() {
     cd "$srcdir/$pkgname-$pkgver"
@@ -28,6 +30,9 @@ prepare() {
     # We remove all those that are provided by Arch/AUR and leave only
     # the ones not currently available
     patch -Np1 -i "$srcdir/externals.patch"
+
+    # Sqlite deprecated the SCRATCH configuration option
+    patch -Np1 -i "$srcdir/sqlite-scratch.patch"
 }
 
 build() {
