@@ -19,8 +19,8 @@ source=("https://ecsft.cern.ch/dist/$pkgname/$pkgname-$pkgver/$pkgname-$pkgver.t
 	'externals.patch'
 	'sqlite-scratch.patch')
 md5sums=('74c438d8d5067f90422fc1775d5e108c'
-         'd160bbc31e6559621ce2612f1b3efbc6'
-         'be50d92565aa3060e86f775f890793b9'
+         'a928a7835a9a77367ba3b146dcc4f9f7'
+         '8649cab7779006ad2ad105649111483d'
          '0ef4c858aa9648dcd46768991748eb06')
 
 prepare() {

@@ -22,3 +22,44 @@
    find_package(TBB REQUIRED)
    set (INCLUDE_DIRECTORIES ${INCLUDE_DIRECTORIES} ${TBB_INCLUDE_DIRS})
  endif (BUILD_SERVER OR BUILD_SERVER_DEBUG OR BUILD_PRELOADER OR
+
+--- cvmfs-2.4.4.orig/cvmfs/CMakeLists.txt	2018-04-17 21:48:31.621005622 +0200
++++ cvmfs-2.4.4/cvmfs/CMakeLists.txt	2018-04-17 21:49:00.509225844 +0200
+@@ -831,13 +831,6 @@
+   endif (BUILD_OCTOPUS)
+ 
+   install(
+-    FILES
+-    ${EXTERNALS_INSTALL_LOCATION}/lib/GeoIP.so
+-    DESTINATION    "/usr/share/cvmfs-server/webapi"
+-    PERMISSIONS    OWNER_READ GROUP_READ WORLD_READ
+-  )
+-
+-  install(
+     FILES      webapi/cvmfs_api.py webapi/cvmfs_geo.py webapi/cvmfs_globals.py
+     DESTINATION    "/usr/share/cvmfs-server/webapi"
+     PERMISSIONS    OWNER_READ GROUP_READ WORLD_READ
+@@ -854,23 +847,6 @@
+     CODE  "FILE(MAKE_DIRECTORY \$ENV{DESTDIR}/var/lib/cvmfs-server/geo)"
+     )
+ 
+-  # If we built the third-party libraries ourselves, we should also install the TBB libraries
+-  if (BUILTIN_EXTERNALS)
+-    install(
+-      FILES
+-      ${EXTERNALS_INSTALL_LOCATION}/lib/libtbb_cvmfs.so
+-      ${EXTERNALS_INSTALL_LOCATION}/lib/libtbb_cvmfs_debug.so
+-      ${EXTERNALS_INSTALL_LOCATION}/lib/libtbb_cvmfs.so.2
+-      ${EXTERNALS_INSTALL_LOCATION}/lib/libtbb_cvmfs_debug.so.2
+-      ${EXTERNALS_INSTALL_LOCATION}/lib/libtbbmalloc_cvmfs.so
+-      ${EXTERNALS_INSTALL_LOCATION}/lib/libtbbmalloc_cvmfs_debug.so
+-      ${EXTERNALS_INSTALL_LOCATION}/lib/libtbbmalloc_cvmfs.so.2
+-      ${EXTERNALS_INSTALL_LOCATION}/lib/libtbbmalloc_cvmfs_debug.so.2
+-      DESTINATION ${CMAKE_INSTALL_LIBDIR}
+-      PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+-      )
+-  endif (BUILTIN_EXTERNALS)
+-
+ endif (BUILD_SERVER)
+ 
+ if (BUILD_PRELOADER)
