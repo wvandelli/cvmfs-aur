@@ -20,24 +20,26 @@ md5sums=('74c438d8d5067f90422fc1775d5e108c'
          '20dc60c61077f4a3711463e8686d260d')
 
 prepare() {
+    # Tweak external packages
+    # We remove all those that are provide by Arch/AUR and leave only those
+    # not currently available
     cd "$srcdir/$pkgname-$pkgver"
     sed -i 's/missing_libs=\"libcurl /missing_libs=\"/g' bootstrap.sh
     sed -i 's/missing_libs=\".*/missing_libs=\"vjson sha2 sha3\"/g' bootstrap.sh
 }
 
 build() {
-	cd "$srcdir/$pkgname-$pkgver"
+    cd "$srcdir/$pkgname-$pkgver"
     mkdir -p build
     cd build
-    #cmake -DBUILD_SERVER=OFF -DBUILD_RECEIVER=OFF -DBUILD_LIBCVMFS_CACHE=OFF -DBUILD_LIBCVMFS=OFF ../
     cmake -C "${srcdir}/settings.cmake" ../
 
     make
 }
 
 package() {
-	cd "$srcdir/$pkgname-$pkgver/build"
-	make DESTDIR="$pkgdir/" install
+    cd "$srcdir/$pkgname-$pkgver/build"
+    make DESTDIR="$pkgdir/" install
     sed -e "s/\/etc\/auto.master/\/etc\/autofs\/auto.master/g" -i $pkgdir/usr/bin/cvmfs_config
     install -Dm644 "${srcdir}/${pkgname}-${pkgver}/COPYING" "${pkgdir}/usr/share/licenses/cvmfs/COPYING"
 
