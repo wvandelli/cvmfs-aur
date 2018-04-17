@@ -1,11 +1,24 @@
---- cvmfs-2.4.4.orig/bootstrap.sh	2017-12-11 14:35:17.000000000 +0100
-+++ cvmfs-2.4.4/bootstrap.sh	2018-04-17 12:51:55.231489376 +0200
+--- cvmfs-2.4.4.orig/bootstrap.sh	2018-04-17 17:04:20.422815066 +0200
++++ cvmfs-2.4.4/bootstrap.sh	2018-04-17 18:51:30.139041066 +0200
 @@ -244,7 +244,7 @@
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  
  # Build a list of libs that need to be built
 -missing_libs="libcurl pacparser zlib sparsehash leveldb googletest libgeoip tbb protobuf googlebench sqlite3 vjson sha2 sha3 mongoose"
-+missing_libs="vjson sha2 sha3"
++missing_libs="vjson sha2 sha3 mongoose"
  
  if [ -f $externals_install_dir/.bootstrapDone ]; then
    existing_libs=$(cat $externals_install_dir/.bootstrapDone)
+
+--- cvmfs-2.4.4.orig/CMakeLists.txt	2018-04-17 17:04:20.421815069 +0200
++++ cvmfs-2.4.4/CMakeLists.txt	2018-04-17 18:51:43.438996329 +0200
+@@ -388,9 +388,6 @@
+ # Server/preloader only: tbb
+ if (BUILD_SERVER OR BUILD_SERVER_DEBUG OR BUILD_PRELOADER OR
+     BUILD_UNITTESTS OR BUILD_UNITTESTS_DEBUG)
+-    if (BUILTIN_EXTERNALS)
+-      set(TBB_LIB_SUFFIX "_cvmfs")
+-    endif(BUILTIN_EXTERNALS)
+   find_package(TBB REQUIRED)
+   set (INCLUDE_DIRECTORIES ${INCLUDE_DIRECTORIES} ${TBB_INCLUDE_DIRS})
+ endif (BUILD_SERVER OR BUILD_SERVER_DEBUG OR BUILD_PRELOADER OR
