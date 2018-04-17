@@ -15,17 +15,19 @@ backup=('etc/cvmfs/default.local')
 install=cvmfs.install
 options=('!emptydirs')
 source=("https://ecsft.cern.ch/dist/$pkgname/$pkgname-$pkgver/$pkgname-$pkgver.tar.gz"
-        'settings.cmake')
+        'settings.cmake'
+	'externals.patch')
 md5sums=('74c438d8d5067f90422fc1775d5e108c'
-         '20dc60c61077f4a3711463e8686d260d')
+         '20dc60c61077f4a3711463e8686d260d'
+         'ce48523a1319f54349a897a6c32d7e34')
 
 prepare() {
-    # Tweak external packages
-    # We remove all those that are provide by Arch/AUR and leave only those
-    # not currently available
     cd "$srcdir/$pkgname-$pkgver"
-    sed -i 's/missing_libs=\"libcurl /missing_libs=\"/g' bootstrap.sh
-    sed -i 's/missing_libs=\".*/missing_libs=\"vjson sha2 sha3\"/g' bootstrap.sh
+
+    # Tweak external packages
+    # We remove all those that are provided by Arch/AUR and leave only
+    # the ones not currently available
+    patch -Np1 -i "$srcdir/externals.patch"
 }
 
 build() {
