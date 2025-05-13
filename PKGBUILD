@@ -5,12 +5,12 @@
 # Contributor: Lin Further 
 pkgname=cvmfs
 pkgver=2.12.7
-pkgrel=1
+pkgrel=2
 pkgdesc="A client-server file system implemented in FUSE and developed to deliver software distributions onto virtual machines in a fast, scalable, and reliable way."
 arch=('x86_64')
 url="http://cernvm.cern.ch/portal/filesystem"
 license=('BSD')
-depends=('fuse2' 'curl' 'c-ares' 'pacparser' 'sqlite' 'protobuf' 'leveldb')
+depends=('fuse2' 'curl' 'c-ares' 'pacparser' 'sqlite' 'leveldb')
 makedepends=('cmake' 'make' 'gtest' 'sparsehash')
 backup=('etc/cvmfs/default.local')
 install=cvmfs.install
@@ -21,7 +21,7 @@ source=("https://ecsft.cern.ch/dist/$pkgname/$pkgname-$pkgver/$pkgname-$pkgver.t
        )
 md5sums=('07db7f0270e196458bdc9c2887097204'
          '20dc60c61077f4a3711463e8686d260d'
-         'ca3ed7c5f29b48b045fa3fd8826f5258')
+         '0b8d3324e5d7821d0182f1409888f473')
 
 prepare() {
     cd "$srcdir/$pkgname-$pkgver"
