@@ -2,38 +2,29 @@
 # Contributor: Sebastien Binet binet-at-cern-ch
 # Maintainer: Wainer Vandelli <wainer dot vandelli at gmail dot com>
 # Contributor: Konstantin Gizdov < arch at kge dot pw >
-# Contributor: Lin Further 
+# Contributor: Lin Further
+# Contributor: vavolkl
 pkgname=cvmfs
-pkgver=2.13.1
-pkgrel=2
+pkgver=2.13.2
+pkgrel=1
 pkgdesc="A client-server file system implemented in FUSE and developed to deliver software distributions onto virtual machines in a fast, scalable, and reliable way."
 arch=('x86_64')
 url="http://cernvm.cern.ch/portal/filesystem"
 license=('BSD')
 depends=('fuse2' 'curl' 'c-ares' 'pacparser' 'sqlite' 'leveldb')
-makedepends=('cmake' 'make' 'gtest' 'sparsehash')
+makedepends=('cmake' 'make' 'gtest' 'sparsehash' 'help2man')
 backup=('etc/cvmfs/default.local')
 install=cvmfs.install
 options=('!emptydirs')
-source=("https://ecsft.cern.ch/dist/$pkgname/$pkgname-$pkgver/$pkgname-$pkgver.tar.gz"
-        'settings.cmake'
-        'externals.patch' # TODO: use libcrypto from system openssl instead of building libressl here?
+source=("https://github.com/cvmfs/cvmfs/archive/refs/tags/$pkgname-$pkgver.tar.gz"
+        'settings.cmake' # TODO: use libcrypto from system openssl instead of building libressl here?
        )
-md5sums=('a47c44910e4e44c9fa7f05dd7dcdfd9d'
-         '20dc60c61077f4a3711463e8686d260d'
-         '0b8d3324e5d7821d0182f1409888f473')
-
-prepare() {
-    cd "$srcdir/$pkgname-$pkgver"
-
-    # Tweak external packages
-    # We remove all those that are provided by Arch/AUR and leave only
-    # the ones not currently available
-    patch -Np1 -i "$srcdir/externals.patch"
-}
+md5sums=('8b64afe4e7acfe1b847a52d67b9a289a'
+         '2c0adcc2f67d0294d47583a77c06a88b')
 
 build() {
-    cd "$srcdir/$pkgname-$pkgver"
+    # github tarballs have naming convention projectname-tagname, and tags are called cvmfs-2.XX.Y
+    cd "$srcdir/$pkgname-$pkgname-$pkgver"
     mkdir -p build
     cd build
     cmake -C "${srcdir}/settings.cmake" -DCMAKE_BUILD_TYPE=Release ../
@@ -42,11 +33,11 @@ build() {
 }
 
 package() {
-    cd "$srcdir/$pkgname-$pkgver/build"
+    cd "$srcdir/$pkgname-$pkgname-$pkgver/build"
     make DESTDIR="$pkgdir/" install
     sed -e "s/\/etc\/auto.master/\/etc\/autofs\/auto.master/g" -i $pkgdir/usr/bin/cvmfs_config
     sed "s/\/etc\/auto.cvmfs/\/etc\/autofs\/auto.cvmfs/g" -i $pkgdir/usr/bin/cvmfs_config
-    install -Dm644 "${srcdir}/${pkgname}-${pkgver}/COPYING" "${pkgdir}/usr/share/licenses/cvmfs/COPYING"
+    install -Dm644 "${srcdir}/${pkgname}-${pkgname}-${pkgver}/COPYING" "${pkgdir}/usr/share/licenses/cvmfs/COPYING"
     mkdir -p ${pkgdir}/etc/autofs
     ln -s /usr/lib/${pkgname}/auto.cvmfs ${pkgdir}/etc/autofs/auto.cvmfs
 
