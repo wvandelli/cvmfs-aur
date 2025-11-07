@@ -5,8 +5,8 @@
 # Contributor: Lin Further
 # Contributor: vavolkl
 pkgname=cvmfs
-pkgver=2.13.2
-pkgrel=3
+pkgver=2.13.3
+pkgrel=1
 pkgdesc="A client-server file system implemented in FUSE and developed to deliver software distributions onto virtual machines in a fast, scalable, and reliable way."
 arch=('x86_64')
 url="http://cernvm.cern.ch/portal/filesystem"
@@ -19,7 +19,7 @@ options=('!emptydirs')
 source=("https://github.com/cvmfs/cvmfs/archive/refs/tags/$pkgname-$pkgver.tar.gz"
         'settings.cmake' # TODO: use libcrypto from system openssl instead of building libressl here?
        )
-md5sums=('8b64afe4e7acfe1b847a52d67b9a289a'
+md5sums=('1b92cac5d44db031db4e361aeb678112'
          '2c0adcc2f67d0294d47583a77c06a88b')
 
 build() {
