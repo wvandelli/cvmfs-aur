@@ -6,12 +6,13 @@
 # Contributor: vavolkl
 pkgname=cvmfs
 pkgver=2.13.3
-pkgrel=2
+pkgrel=3
 pkgdesc="A client-server file system implemented in FUSE and developed to deliver software distributions onto virtual machines in a fast, scalable, and reliable way."
 arch=('x86_64')
 url="http://cernvm.cern.ch/portal/filesystem"
 license=('BSD')
 depends=('fuse3' 'curl' 'c-ares' 'pacparser' 'sqlite' 'leveldb')
+optdepends=('autofs')
 makedepends=('cmake' 'make' 'gtest' 'sparsehash' 'help2man')
 backup=('etc/cvmfs/default.local')
 install=cvmfs.install
