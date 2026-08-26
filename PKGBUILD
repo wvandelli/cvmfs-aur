@@ -5,32 +5,22 @@
 # Contributor: Lin Further
 # Contributor: vavolkl
 pkgname=cvmfs
-pkgver=2.13.3
-pkgrel=2
+pkgver=2.14.1
+pkgrel=1
 pkgdesc="A client-server file system implemented in FUSE and developed to deliver software distributions onto virtual machines in a fast, scalable, and reliable way."
 arch=('x86_64')
 url="http://cernvm.cern.ch/portal/filesystem"
 license=('BSD')
 depends=('fuse3' 'curl' 'c-ares' 'pacparser' 'sqlite' 'leveldb')
-makedepends=('cmake' 'make' 'gtest' 'sparsehash' 'help2man')
+makedepends=('cmake' 'make' 'gtest' 'sparsehash' 'help2man' 'protobuf')
 backup=('etc/cvmfs/default.local')
 install=cvmfs.install
 options=('!emptydirs')
 source=("https://github.com/cvmfs/cvmfs/archive/refs/tags/$pkgname-$pkgver.tar.gz"
         'settings.cmake' # TODO: use libcrypto from system openssl instead of building libressl here?
-        'man_race.patch::https://github.com/cvmfs/cvmfs/pull/4075.patch'
        )
-md5sums=('1b92cac5d44db031db4e361aeb678112'
-         '2c0adcc2f67d0294d47583a77c06a88b'
-         'da3550a4ad0dcbe8e4c5bdde740610e1')
-
-prepare() {
-    #Temporary pull patch for a race condition occasionally
-    #breaking the man page generation
-    #https://github.com/cvmfs/cvmfs/pull/4075
-    #!!TO BE REMOVED FOR THE NEXT OFFICIAL RELEASE!!
-    patch -d $pkgname-$pkgname-$pkgver -Np1 -i ../man_race.patch
-}
+md5sums=('f2fe8673a4b05e2e931a780fa9254525'
+         'b0c881aa822a6ac2af386412e5b79972')
 
 build() {
     # github tarballs have naming convention projectname-tagname, and tags are called cvmfs-2.XX.Y
